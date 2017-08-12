@@ -1,4 +1,4 @@
-# rtpengine-client [![Build Status](https://travis-ci.org/davehorton/rtpengine-client.svg?branch=master)](http://travis-ci.org/davehorton/rtpengine-client) [![NPM version](https://badge.fury.io/js/rtpengine-client.svg)](http://badge.fury.io/js/rtpengine-client)
+# rtpengine-client [![Build Status](https://travis-ci.org/davehorton/rtpengine-client.svg?branch=master)](http://travis-ci.org/davehorton/rtpengine-client) [![NPM version](https://badge.fury.io/js/rtpengine-client.svg)](http://badge.fury.io/js/rtpengine-client) [![Coverage Status](https://coveralls.io/repos/github/davehorton/rtpengine-client/badge.svg?branch=master)](https://coveralls.io/github/davehorton/rtpengine-client?branch=master)
 
 A Promises-based nodejs client for accessing rtpengine via ng protocol
 

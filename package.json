@@ -6,11 +6,13 @@
   "scripts": {
     "jslint": "eslint lib index.js",
     "test": "NODE_ENV=test node test/* | ./node_modules/.bin/tap-spec",
-    "coverage": "NODE_ENV=test ./node_modules/.bin/istanbul cover test/* --report html"
+    "coverage": "NODE_ENV=test ./node_modules/.bin/istanbul cover test/* --report html",
+    "coveralls": "NODE_ENV=test ./node_modules/.bin/istanbul cover test/* && node_modules/.bin/istanbul-coveralls"
   },
   "author": "Dave Horton",
   "license": "MIT",
   "devDependencies": {
+    "coveralls": "^2.13.1",
     "istanbul": "^0.4.5",
     "sinon": "^3.2.0",
     "tap": "^10.7.0",
