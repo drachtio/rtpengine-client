@@ -19,6 +19,14 @@ function fakeRtpEngineFail(message, port, host, callback) {
   callback(new Error('error sending'));
 }
 
+function fakeRtpEngineFail2(message, port, host, callback) {
+  setImmediate(() => { this.emit('error', 'unexpected error of some kind'); });
+}
+
+function fakeRtpEngineFail3(message, port, host, callback) {
+  setImmediate(() => { this.emit('message', 'unparseable message'); });
+}
+
 test('new Client()', (t) => {
   t.plan(1);
   let client ;
@@ -134,4 +142,29 @@ test('error sending', (t) => {
     });
 }) ;
 
+test('socket error', (t) => {
+  t.plan(1);
+  const client = new Client() ;
+  sinon.stub(client.socket, 'send')
+    .callsFake(fakeRtpEngineFail2.bind(client.socket));
+
+  client.ping(22222, '35.195.250.243');
+  client.on('error', (err) => {
+    t.pass('error is emitted by client');
+    client.close() ;
+  });
+}) ;
+
+test('message parsing error', (t) => {
+  t.plan(1);
+  const client = new Client() ;
+  sinon.stub(client.socket, 'send')
+    .callsFake(fakeRtpEngineFail3.bind(client.socket));
+
+  client.ping(22222, '35.195.250.243');
+  client.on('error', (err) => {
+    t.pass('error is emitted by client');
+    client.close() ;
+  });
+}) ;
 
