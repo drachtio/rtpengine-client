@@ -15,6 +15,9 @@ function fakeRtpEngine(message, port, host, callback) {
       break;
   }
 }
+function fakeRtpEngineFail(message, port, host, callback) {
+  callback(new Error('error sending'));
+}
 
 test('new Client()', (t) => {
   t.plan(1);
@@ -113,4 +116,22 @@ test('ping(port, host)', (t) => {
       t.fail(err);
     });
 }) ;
+
+test('error sending', (t) => {
+  t.plan(1);
+  const client = new Client() ;
+  sinon.stub(client.socket, 'send')
+    .callsFake(fakeRtpEngineFail.bind(client.socket));
+
+  client.ping(22222, '35.195.250.243')
+    .then((res) => {
+      t.fail('expected send failure');
+      client.close();
+    })
+    .catch((err) => {
+      client.close() ;
+      t.pass('rejects Promise when send fails');
+    });
+}) ;
+
 
