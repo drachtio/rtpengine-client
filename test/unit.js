@@ -4,7 +4,7 @@ const sinon = require('sinon');
 const decode = Client.decodeMessage;
 const encode = Client.encodeMessage;
 
-function fakeRtpEngine(message, port, host, callback) {
+function fakeRtpEngine(client, message, port, host, callback) {
   const obj = decode(message);
 
   callback(null);
@@ -15,16 +15,30 @@ function fakeRtpEngine(message, port, host, callback) {
       break;
   }
 }
-function fakeRtpEngineFail(message, port, host, callback) {
+function fakeRtpEngineFail(client, message, port, host, callback) {
   callback(new Error('error sending'));
 }
 
-function fakeRtpEngineFail2(message, port, host, callback) {
+function fakeRtpEngineFail2(client, message, port, host, callback) {
   setImmediate(() => { this.emit('error', 'unexpected error of some kind'); });
 }
 
-function fakeRtpEngineFail3(message, port, host, callback) {
+function fakeRtpEngineFail3(client, message, port, host, callback) {
   setImmediate(() => { this.emit('message', 'unparseable message'); });
+}
+function fakeRtpEngineFail4(client, message, port, host, callback) {
+  setImmediate(() => {
+    const obj = decode(message);
+    client.messages.delete(obj.id);
+
+    callback(null);
+
+    switch (obj.data.command) {
+      case 'ping':
+        this.emit('message', encode(obj.id, {result: 'pong'}));
+        break;
+    }
+  }) ;
 }
 
 test('new Client()', (t) => {
@@ -95,7 +109,7 @@ test('ping({port, host})', (t) => {
   t.plan(1);
   const client = new Client() ;
   sinon.stub(client.socket, 'send')
-    .callsFake(fakeRtpEngine.bind(client.socket));
+    .callsFake(fakeRtpEngine.bind(client.socket, client));
 
   client.ping({port: 22222, host: '35.195.250.243'})
     .then((res) => {
@@ -112,7 +126,7 @@ test('ping(port, host)', (t) => {
   t.plan(1);
   const client = new Client() ;
   sinon.stub(client.socket, 'send')
-    .callsFake(fakeRtpEngine.bind(client.socket));
+    .callsFake(fakeRtpEngine.bind(client.socket, client));
 
   client.ping(22222, '35.195.250.243')
     .then((res) => {
@@ -129,7 +143,7 @@ test('error sending', (t) => {
   t.plan(1);
   const client = new Client() ;
   sinon.stub(client.socket, 'send')
-    .callsFake(fakeRtpEngineFail.bind(client.socket));
+    .callsFake(fakeRtpEngineFail.bind(client.socket, client));
 
   client.ping(22222, '35.195.250.243')
     .then((res) => {
@@ -146,7 +160,7 @@ test('socket error', (t) => {
   t.plan(1);
   const client = new Client() ;
   sinon.stub(client.socket, 'send')
-    .callsFake(fakeRtpEngineFail2.bind(client.socket));
+    .callsFake(fakeRtpEngineFail2.bind(client.socket, client));
 
   client.ping(22222, '35.195.250.243');
   client.on('error', (err) => {
@@ -159,7 +173,7 @@ test('message parsing error', (t) => {
   t.plan(1);
   const client = new Client() ;
   sinon.stub(client.socket, 'send')
-    .callsFake(fakeRtpEngineFail3.bind(client.socket));
+    .callsFake(fakeRtpEngineFail3.bind(client.socket, client));
 
   client.ping(22222, '35.195.250.243');
   client.on('error', (err) => {
@@ -168,3 +182,15 @@ test('message parsing error', (t) => {
   });
 }) ;
 
+test('message correlation error', (t) => {
+  t.plan(1);
+  const client = new Client() ;
+  sinon.stub(client.socket, 'send')
+    .callsFake(fakeRtpEngineFail4.bind(client.socket, client));
+
+  client.ping(22222, '35.195.250.243');
+  client.on('error', (err) => {
+    t.pass('error is emitted by client');
+    client.close() ;
+  });
+}) ;
