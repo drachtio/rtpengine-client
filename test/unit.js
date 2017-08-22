@@ -3,6 +3,7 @@ const Client = require('..').Client ;
 const sinon = require('sinon');
 const decode = Client.decodeMessage;
 const encode = Client.encodeMessage;
+const debug = require('debug')('rtpengine:test') ;
 
 function fakeRtpEngine(client, message, port, host, callback) {
   const obj = decode(message);
@@ -38,6 +39,12 @@ function fakeRtpEngineFail4(client, message, port, host, callback) {
         this.emit('message', encode(obj.id, {result: 'pong'}));
         break;
     }
+  }) ;
+}
+function fakeRtpEngineFail5(client, message, port, host, callback) {
+  debug('got ping message');
+  setImmediate(() => {
+    callback(null);
   }) ;
 }
 
@@ -182,6 +189,23 @@ test('message parsing error', (t) => {
   });
 }) ;
 
+test('timeout', (t) => {
+  t.plan(1);
+  const client = new Client({timeout: 10}) ;
+  sinon.stub(client.socket, 'send')
+    .callsFake(fakeRtpEngineFail5.bind(client.socket, client));
+
+  client.ping({port: 22222, host: '35.195.250.243'})
+    .then((res) => {
+      t.fail('expected send failure');
+      client.close();
+    })
+    .catch((err) => {
+      client.close() ;
+      t.equals(err.message, 'rtpengine timeout', 'rtpengine timeout is emitted by client');
+    });
+}) ;
+
 test('message correlation error', (t) => {
   t.plan(1);
   const client = new Client() ;
@@ -190,7 +214,7 @@ test('message correlation error', (t) => {
 
   client.ping(22222, '35.195.250.243');
   client.on('error', (err) => {
-    t.pass('error is emitted by client');
+    t.pass();
     client.close() ;
   });
 }) ;
