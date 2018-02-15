@@ -1,5 +1,6 @@
 const test = require('tape').test ;
 const Client = require('..').Client ;
+const RtpEngineError = require('..').RtpEngineError ;
 const sinon = require('sinon');
 const decode = Client.decodeMessage;
 const encode = Client.encodeMessage;
@@ -184,7 +185,7 @@ test('message parsing error', (t) => {
 
   client.ping(22222, '35.195.250.243');
   client.on('error', (err) => {
-    t.pass('error is emitted by client');
+    t.ok(err instanceof RtpEngineError, 'RtpEngineError emitted by client');
     client.close() ;
   });
 }) ;
