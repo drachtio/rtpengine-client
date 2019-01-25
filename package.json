@@ -26,5 +26,9 @@
   },
   "keywords": [
     "rtpengine"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/davehorton/rtpengine-client"
+  }
 }
