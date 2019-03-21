@@ -27,6 +27,12 @@ client = new Client(9055);    // listen on a specific port
 client = new Client(9055, '192.168.1.10'); // listen on a specific port and address
 // or..
 client = new Client({port: 9055, host: '192.168.1.10'}); // listen on a specific port and address
+// or..
+client = new Client({timeout: 1500}); // wait a max of 1500 ms for each command reply, throw error on timeout
+// or..
+client = new Client({rejectOnFailure: true}); 
+// reject promise on any command if response from rtpengine has error 
+// default behavior is to resolve with any response from rtpengine, even errors
 ```
 
 ## Making requests

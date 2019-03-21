@@ -1,6 +1,6 @@
 {
   "name": "rtpengine-client",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "node client for rtpengine daemon",
   "main": "index.js",
   "scripts": {
