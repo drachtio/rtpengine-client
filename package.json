@@ -1,28 +1,27 @@
 {
   "name": "rtpengine-client",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "node client for rtpengine daemon",
   "main": "index.js",
   "scripts": {
-    "jslint": "eslint lib index.js",
-    "test": "NODE_ENV=test,DEBUG=* node test/* | ./node_modules/.bin/tap-spec",
-    "coverage": "NODE_ENV=test ./node_modules/.bin/istanbul cover test/* --report html",
-    "coveralls": "NODE_ENV=test ./node_modules/.bin/istanbul cover test/* && node_modules/.bin/istanbul-coveralls"
+    "test": "NODE_ENV=test node test/ | ./node_modules/.bin/tap-spec",
+    "coverage": "./node_modules/.bin/nyc --reporter html --report-dir ./coverage npm run test",
+    "jslint": "eslint lib"
   },
   "author": "Dave Horton",
   "license": "MIT",
   "devDependencies": {
-    "coveralls": "^2.13.1",
-    "istanbul": "^0.4.5",
-    "sinon": "^3.2.0",
-    "tap": "^10.7.0",
-    "tap-dot": "^1.0.5",
-    "tap-spec": "^4.1.1",
+    "eslint": "^6.5.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "sinon": "^7.5.0",
+    "nyc": "^14.1.0",
+    "tap": "^14.6.5",
+    "tap-dot": "^2.0.0",
+    "tap-spec": "^5.0.0",
     "tape": "^4.7.0"
   },
   "dependencies": {
-    "bencode": "^1.0.0",
-    "dgram": "^1.0.1"
+    "bencode": "^1.0.0"
   },
   "keywords": [
     "rtpengine"
