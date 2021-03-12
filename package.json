@@ -11,11 +11,10 @@
   "author": "Dave Horton",
   "license": "MIT",
   "devDependencies": {
+    "debug": "^4.3.1",
     "eslint": "^7.4.0",
-    "eslint-plugin-promise": "^4.2.1",
     "nyc": "^15.1.0",
     "sinon": "^9.0.2",
-    "tap-dot": "^2.0.0",
     "tap-spec": "^5.0.0",
     "tape": "^5.0.1"
   },
