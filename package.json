@@ -21,7 +21,8 @@
   },
   "dependencies": {
     "bencode": "^2.0.1",
-    "uuid": "^8.2.0"
+    "uuid": "^8.2.0",
+    "ws": "^7.4.4"
   },
   "keywords": [
     "rtpengine"
