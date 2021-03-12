@@ -5,8 +5,8 @@ A Promises-based nodejs client for accessing rtpengine via ng protocol
 ## Usage
 
 ```js
-const Client = require('rtpengine-client').Client ;
-const client = new Client() ;
+const Client = require('rtpengine-client').Client;
+const client = new Client();
 
 client.ping(22222, '39.194.250.246')
   .then((res) => {
@@ -14,13 +14,12 @@ client.ping(22222, '39.194.250.246')
   })
   .catch((err) => {
     console.log(`Error: ${err}`);
-  }
-}
-```  
+  });
+```
 
-## Constructing a client 
+## Constructing a client
 ```js
-client = new Client() ;  // listen on any port and default address
+client = new Client();  // listen on any port and default address
 // or..
 client = new Client(9055);    // listen on a specific port
 // or..
@@ -30,9 +29,25 @@ client = new Client({port: 9055, host: '192.168.1.10'}); // listen on a specific
 // or..
 client = new Client({timeout: 1500}); // wait a max of 1500 ms for each command reply, throw error on timeout
 // or..
-client = new Client({rejectOnFailure: true}); 
-// reject promise on any command if response from rtpengine has error 
+client = new Client({rejectOnFailure: true});
+// reject promise on any command if response from rtpengine has error
 // default behavior is to resolve with any response from rtpengine, even errors
+```
+
+## Websocket support
+
+```js
+const client = new Client('ws://<IP>:8080');
+
+client.on('listening', () => {
+  client.statistics()
+    .then((res) => {
+      console.log('received data', res);
+    })
+    .catch((err) => {
+      console.log(`Error: ${err}`);
+    });
+});
 ```
 
 ## Making requests
@@ -55,8 +70,12 @@ Function names are as follows:
 |stop recording  | stopRecording  |
 |block DTMF      | blockDTMF      |
 |unblock DTMF    | unblockDTMF    |
+|play DTMF       | playDTMF       |
 |block media     | blockMedia     |
 |unblock media   | unblockMedia   |
+|play media      | playMedia      |
+|stop media      | stopMedia      |
+|statistics      | statistics     |
 
 For instance
 ```

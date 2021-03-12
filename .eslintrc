@@ -89,7 +89,7 @@ rules:
   no-new-symbol: 2
   no-this-before-super: 2
   prefer-const: 2
-  
+
 # Global scoped method and vars
 globals:
   DTRACE_HTTP_CLIENT_REQUEST           : false
