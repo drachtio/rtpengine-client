@@ -59,23 +59,31 @@ The function call returns a promise that is resolved when the response is receiv
 
 Function names are as follows:
 
-| ng verb         | function name |
-|----------------|----------------|
-|ping            | ping           |
-|offer           | offer          |
-|answer          | answer         |
-|delete          | delete         |
-|query           | query          |
-|start recording | startRecording |
-|stop recording  | stopRecording  |
-|block DTMF      | blockDTMF      |
-|unblock DTMF    | unblockDTMF    |
-|play DTMF       | playDTMF       |
-|block media     | blockMedia     |
-|unblock media   | unblockMedia   |
-|play media      | playMedia      |
-|stop media      | stopMedia      |
-|statistics      | statistics     |
+| ng verb          | function name    |
+|------------------|------------------|
+|ping              | ping             |
+|offer             | offer            |
+|answer            | answer           |
+|delete            | delete           |
+|query             | query            |
+|start recording   | startRecording   |
+|stop recording    | stopRecording    |
+|block DTMF        | blockDTMF        |
+|unblock DTMF      | unblockDTMF      |
+|play DTMF         | playDTMF         |
+|block media       | blockMedia       |
+|unblock media     | unblockMedia     |
+|silence media     | silenceMedia     |
+|unsilence media   | unsilenceMedia   |
+|start forwarding  | startForwarding  |
+|stop forwarding   | stopForwarding   |
+|play media        | playMedia        |
+|stop media        | stopMedia        |
+|statistics        | statistics       |
+|publish           | publish          |
+|subscribe request | subscribeRequest |
+|subscribe answer  | subscribeAnswer  |
+|unsubscribe       | unsubscribe      |
 
 For instance
 ```
