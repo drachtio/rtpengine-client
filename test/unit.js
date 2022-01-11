@@ -1,5 +1,5 @@
 const test = require('tape').test;
-const Client = require('..').Client;
+const {Client, TcpClient} = require('..');
 const RtpEngineError = require('..').RtpEngineError;
 const sinon = require('sinon');
 const decode = Client.decodeMessage;

@@ -1,10 +1,10 @@
 {
   "name": "rtpengine-client",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "node client for rtpengine daemon",
   "main": "index.js",
   "scripts": {
-    "test": "NODE_ENV=test node test/ | ./node_modules/.bin/tap-spec",
+    "test": "NODE_ENV=test node test/ ",
     "coverage": "./node_modules/.bin/nyc --reporter html --report-dir ./coverage npm run test",
     "jslint": "eslint lib"
   },
@@ -15,7 +15,6 @@
     "eslint": "^7.4.0",
     "nyc": "^15.1.0",
     "sinon": "^9.0.2",
-    "tap-spec": "^5.0.0",
     "tape": "^5.0.1"
   },
   "dependencies": {
