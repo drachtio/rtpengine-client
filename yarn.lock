@@ -659,6 +659,11 @@
   "resolved" "https://registry.npmjs.org/escape-string-regexp/-/escape-string-regexp-1.0.5.tgz"
   "version" "1.0.5"
 
+"eslint-plugin-promise@^6.0.0":
+  "integrity" "sha512-7GPezalm5Bfi/E22PnQxDWH2iW9GTvAlUNTztemeHb6c1BniSyoeTrM87JkC0wYdi6aQrZX9p2qEiAno8aTcbw=="
+  "resolved" "https://registry.npmjs.org/eslint-plugin-promise/-/eslint-plugin-promise-6.0.0.tgz"
+  "version" "6.0.0"
+
 "eslint-scope@^5.1.1":
   "integrity" "sha512-2NxwbF/hZ0KpepYN0cNbo+FN6XoK7GaHlQhgx/hIZl6Va0bF45RQOOwhLIy8lQDbuCiadSLCBnH2CFYquit5bw=="
   "resolved" "https://registry.npmjs.org/eslint-scope/-/eslint-scope-5.1.1.tgz"
@@ -689,7 +694,7 @@
   "resolved" "https://registry.npmjs.org/eslint-visitor-keys/-/eslint-visitor-keys-2.0.0.tgz"
   "version" "2.0.0"
 
-"eslint@^7.4.0":
+"eslint@^7.0.0 || ^8.0.0", "eslint@^7.4.0":
   "integrity" "sha512-W2aJbXpMNofUp0ztQaF40fveSsJBjlSCSWpy//gzfTvwC+USs/nceBrKmlJOiM8r1bLwP2EuYkCqArn/6QTIgg=="
   "resolved" "https://registry.npmjs.org/eslint/-/eslint-7.21.0.tgz"
   "version" "7.21.0"
