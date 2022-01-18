@@ -219,3 +219,48 @@ test('message correlation error', (t) => {
     client.close();
   });
 });
+
+
+// tcp tests
+const FakeRtpEngine = require('./fakeserver');
+test('tcp - single message', (t) => {
+  t.plan(1);
+  const server = new FakeRtpEngine({port: 3457, scenario: 'nosplit'});
+  const client = new TcpClient('localhost:3457');
+  client.on('connect', () => {
+    client.statistics()
+    .then((res) => {
+      t.pass();
+      client.close();
+      server.close();
+    });
+  });
+});
+
+test('tcp - message broken into two frames', (t) => {
+  t.plan(1);
+  const server = new FakeRtpEngine({port: 3457, scenario: 'split'});
+  const client = new TcpClient('localhost:3457');
+  client.on('connect', () => {
+    client.statistics()
+    .then((res) => {
+      t.pass();
+      client.close();
+      server.close();
+    });
+  });
+});
+
+test('tcp - two messages combined into one frame', (t) => {
+  t.plan(1);
+  const server = new FakeRtpEngine({port: 3457, scenario: 'combine'});
+  const client = new TcpClient('localhost:3457');
+  client.on('connect', () => {
+    client.statistics()
+    .then((res) => {
+      t.pass();
+      client.close();
+      server.close();
+    });
+  });
+});
