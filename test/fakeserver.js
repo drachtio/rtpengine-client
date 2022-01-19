@@ -5,7 +5,8 @@ const data = {
   nosplit: fs.readFileSync(`${__dirname}/data/nosplit.txt`),
   split1: fs.readFileSync(`${__dirname}/data/split-part1.txt`),
   split2: fs.readFileSync(`${__dirname}/data/split-part2.txt`),
-  combine: fs.readFileSync(`${__dirname}/data/combine.txt`)
+  combine: fs.readFileSync(`${__dirname}/data/combine.txt`),
+  nonmessage: 'this is not a message'
 };
 const debug = require('debug')('rtpengine:test');
 
@@ -13,7 +14,7 @@ const waitFor = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 class FakeServer {
   constructor({port, scenario}) {
-    assert.ok(['nosplit', 'split', 'combine'].includes(scenario), `invalid scenario: ${scenario}`);
+    assert.ok(['nosplit', 'split', 'combine', 'nonmessage'].includes(scenario), `invalid scenario: ${scenario}`);
     this.scenario = scenario;
     this.server = net.createServer();
     this.server.listen(port);
@@ -45,6 +46,9 @@ class FakeServer {
             .then(() => {
               socket.write(data.split2, 'utf8');
             })
+          break;
+        case 'nonmessage':
+          socket.write(`${msgId} this is not bencoded`, 'utf8');
           break;
         default:
           socket.write(`${msgId} ${data.combine}`, 'utf8');
