@@ -250,17 +250,3 @@ test('tcp - message broken into two frames', (t) => {
     });
   });
 });
-
-test('tcp - two messages combined into one frame', (t) => {
-  t.plan(1);
-  const server = new FakeRtpEngine({port: 3457, scenario: 'combine'});
-  const client = new TcpClient('localhost:3457');
-  client.on('connect', () => {
-    client.statistics()
-    .then((res) => {
-      t.pass();
-      client.close();
-      server.close();
-    });
-  });
-});
