@@ -5,8 +5,8 @@ const data = {
   nosplit: fs.readFileSync(`${__dirname}/data/nosplit.txt`),
   split1: fs.readFileSync(`${__dirname}/data/split-part1.txt`),
   split2: fs.readFileSync(`${__dirname}/data/split-part2.txt`),
-  combine: fs.readFileSync(`${__dirname}/data/combine.txt`),
-  nonmessage: 'this is not a message'
+  nonmessage: 'this is not a message',
+  sample: 'd3:bar4:spam3:fooi42ee'
 };
 const debug = require('debug')('rtpengine:test');
 
