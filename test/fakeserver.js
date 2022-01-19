@@ -32,6 +32,7 @@ class FakeServer {
   }
 
   _onConnection(socket) {
+    socket.on('error', (err) => {});
     socket.on('data', (d) => {
       const arr = /^(.*)\s/.exec(d.toString());
       const msgId = arr[1];
@@ -48,7 +49,9 @@ class FakeServer {
             })
           break;
         case 'nonmessage':
-          socket.write(`${msgId} this is not bencoded`, 'utf8');
+          for (let i = 0; i < 10000; i++) {
+            if (!socket.destroyed) socket.write(`${msgId} this is not bencoded `, 'utf8');
+            }
           break;
         default:
           socket.write(`${msgId} ${data.combine}`, 'utf8');

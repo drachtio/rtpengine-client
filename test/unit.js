@@ -263,4 +263,10 @@ test('tcp - not a message', (t) => {
       server.close();
     });
   });
+  client.on('error', (err) => {
+    console.log(`msg: ${err.message}`);
+    t.pass();
+    client.close();
+    server.close();
+  });
 });
