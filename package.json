@@ -19,7 +19,7 @@
     "tape": "^5.6.1"
   },
   "dependencies": {
-    "bencode": "^2.0.1",
+    "bencode": "^2.0.3",
     "uuid": "^8.2.0",
     "ws": "^7.4.4"
   },

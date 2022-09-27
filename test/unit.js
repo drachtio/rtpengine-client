@@ -147,6 +147,22 @@ test('ping(port, host)', (t) => {
     });
 });
 
+test('ping using callback', (t) => {
+  t.plan(1);
+  const client = new Client();
+  sinon.stub(client.socket, 'send')
+    .callsFake(fakeRtpEngine.bind(client.socket, client));
+
+  client.ping(22222, '35.195.250.243', (err, res) => {
+    if (err) {
+      client.close();
+      return t.fail(err);
+    }
+    t.equal(res.result, 'pong', 'received \'pong\' when sending using callback');
+    client.close();
+  });
+});
+
 test('error sending', (t) => {
   t.plan(1);
   const client = new Client();
