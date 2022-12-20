@@ -164,11 +164,6 @@
   "resolved" "https://registry.npmjs.org/bencode/-/bencode-2.0.3.tgz"
   "version" "2.0.3"
 
-"bencoding@^0.0.1":
-  "integrity" "sha512-kKmt7Gc2Nc2/SZnqobCp5dPqSnrQR/gvHYbrblRosvs7+n8qXeulml5Q/pS82vRt3Wa2pNhn2EOV05jVVr5fBg=="
-  "resolved" "https://registry.npmjs.org/bencoding/-/bencoding-0.0.1.tgz"
-  "version" "0.0.1"
-
 "brace-expansion@^1.1.7":
   "integrity" "sha512-iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA=="
   "resolved" "https://registry.npmjs.org/brace-expansion/-/brace-expansion-1.1.11.tgz"
