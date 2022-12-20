@@ -307,7 +307,7 @@ test('tcp - not a message', (t) => {
 });
 
 test('benchmark', (t) => {
-  const total = 20000;
+  const total = 50000;
   let responses = 0;
   t.plan(1);
   const client = new Client();
@@ -317,11 +317,12 @@ test('benchmark', (t) => {
   console.log(`starting benchmark: ${total} statistics requests...`);
   const startAt = process.hrtime();
   for (let i = 0; i < total; i++) {
-    client.statistics(22222, '35.195.250.243')
+    const even = i % 2 === 0;
+    client[even ? 'ping': 'statistics'](22222, '35.195.250.243')
       .then((res) => {
         if (++responses === total) {
           const rtt = roundTripTime(startAt);
-          t.pass(`time to send/receive 1,000 ping requests: ${rtt}ms`);
+          t.pass(`time to send/receive ${total} requests: ${rtt}ms`);
           client.close();
         }
         //else console.log({res}, `responses: ${res}`);
