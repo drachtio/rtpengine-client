@@ -14,13 +14,13 @@
     "debug": "^4.3.1",
     "eslint": "^7.4.0",
     "eslint-plugin-promise": "^6.0.0",
-    "nyx": "^0.1.0",
     "sinon": "^9.0.2",
     "tape": "^5.6.1"
   },
   "dependencies": {
     "bencode": "^2.0.3",
-    "uuid": "^8.2.0",
+    "bencoding": "^0.0.1",
+    "random-uuid": "^1.0.2",
     "ws": "^7.4.4"
   },
   "keywords": [
