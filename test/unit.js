@@ -5,6 +5,22 @@ const sinon = require('sinon');
 const decode = Client.decodeMessage;
 const encode = Client.encodeMessage;
 const debug = require('debug')('rtpengine:test');
+const fs = require('fs');
+const data = {
+  nosplit: fs.readFileSync(`${__dirname}/data/nosplit.txt`),
+  split1: fs.readFileSync(`${__dirname}/data/split-part1.txt`),
+  split2: fs.readFileSync(`${__dirname}/data/split-part2.txt`),
+  nonmessage: 'this is not a message',
+  sample: 'd3:bar4:spam3:fooi42ee'
+};
+
+const statResponse = Buffer.from(fs.readFileSync(`${__dirname}/data/nosplit.txt`));
+
+const roundTripTime = (startAt) => {
+  const diff = process.hrtime(startAt);
+  const time = diff[0] * 1e3 + diff[1] * 1e-6;
+  return time.toFixed(0);
+};
 
 function fakeRtpEngine(client, message, port, host, callback) {
   const obj = decode(message);
@@ -14,6 +30,9 @@ function fakeRtpEngine(client, message, port, host, callback) {
   switch (obj.data.command) {
     case 'ping':
       this.emit('message', encode(obj.id, {result: 'pong'}));
+      break;
+    case 'statistics':
+      this.emit('message', Buffer.from([obj.id, statResponse].join(' ')));
       break;
   }
 }
@@ -285,4 +304,31 @@ test('tcp - not a message', (t) => {
     client.close();
     server.close();
   });
+});
+
+test('benchmark', (t) => {
+  const total = 20000;
+  let responses = 0;
+  t.plan(1);
+  const client = new Client();
+  sinon.stub(client.socket, 'send')
+    .callsFake(fakeRtpEngine.bind(client.socket, client));
+
+  console.log(`starting benchmark: ${total} statistics requests...`);
+  const startAt = process.hrtime();
+  for (let i = 0; i < total; i++) {
+    client.statistics(22222, '35.195.250.243')
+      .then((res) => {
+        if (++responses === total) {
+          const rtt = roundTripTime(startAt);
+          t.pass(`time to send/receive 1,000 ping requests: ${rtt}ms`);
+          client.close();
+        }
+        //else console.log({res}, `responses: ${res}`);
+      })
+      .catch((err) => {
+        client.close();
+        t.fail(err);
+      });
+  }
 });
