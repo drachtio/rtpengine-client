@@ -238,7 +238,7 @@ test('timeout', (t) => {
     })
     .catch((err) => {
       client.close();
-      t.equals(err.message, 'rtpengine timeout', 'rtpengine timeout is emitted by client');
+      t.equals(err.message, 'rtpengine timeout host:35.195.250.243 port:22222', 'rtpengine timeout is emitted by client');
     });
 });
 
